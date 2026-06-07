@@ -2,6 +2,142 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رزرو سانس چمپیونزلیگ</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for Persian Typography (Vazirmatn) -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #030712;
+            color: #f3f4f6;
+        }
+        /* UCL Gradient Theme */
+        .ucl-gradient {
+            background: linear-gradient(135deg, #050b14 0%, #0a192f 50%, #0f2b5c 100%);
+        }
+        .ucl-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        /* Neon glowing effects for UCL theme */
+        .glow-accent {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+        }
+        .glow-text {
+            text-shadow: 0 0 10px rgba(147, 197, 253, 0.6);
+        }
+    </style>
+</head>
+<body class="ucl-gradient min-h-screen flex flex-col justify-between">
+
+    <!-- Header Banner Area -->
+    <header class="relative w-full h-56 md:h-64 overflow-hidden shadow-2xl border-b border-blue-900/40">
+        <!-- Background Banner Processed dynamically -->
+        <img src="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcR9GcNmB2EA8D9-vsGNHzV-EZpwFBgxJiwbtnrelc4OOvY1YVwEg1Es8Byu7q5kvv3UXGZw66Ykm-Ae6UE" 
+             alt="UEFA Champions League Banner" 
+             class="w-full h-full object-cover object-center opacity-80 filter brightness-90">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#050b14] via-transparent to-black/50"></div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="container mx-auto px-4 py-8 flex-grow max-w-5xl">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            
+            <!-- Left Side: Interactive Booking Area -->
+            <div class="md:col-span-7 order-2 md:order-1">
+                <div class="ucl-card p-6 md:p-8 rounded-2xl shadow-2xl relative overflow-hidden">
+                    
+                    <!-- Stars Background overlay element -->
+                    <div class="absolute -top-10 -left-10 text-blue-500/10 pointer-events-none">
+                        <i class="fa-solid fa-star-and-crescent text-9xl"></i>
+                    </div>
+
+                    <div class="mb-6">
+                        <span class="bg-blue-600/20 text-blue-400 text-xs font-semibold px-3 py-1 rounded-full border border-blue-500/30 uppercase tracking-wider">
+                            <i class="fa-solid fa-circle-dot animate-pulse mr-1 text-cyan-400"></i> لایو اکران امشب
+                        </span>
+                        <h1 class="text-2xl md:text-3xl font-bold mt-3 text-white glow-text">پخش زنده فینال لیگ قهرمانان</h1>
+                        <!-- The requested text update: جایگاه خود را در سانس امشب تثبیت کنید -->
+                        <p class="text-gray-400 text-sm mt-2 flex items-center gap-2">
+                            <i class="fa-solid fa-ticket text-blue-400"></i>
+                            جایگاه خود را در سانس امشب تثبیت کنید
+                        </p>
+                    </div>
+
+                    <!-- Booking Form / Dynamic Widget Placement -->
+                    <div class="space-y-4">
+                        <div class="flex gap-4">
+                            <div class="w-1/2">
+                                <label class="block text-xs text-gray-400 mb-1 mr-1">نام و نام خانوادگی</label>
+                                <input type="text" placeholder="مثال: علی علوی" class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500 transition-colors">
+                            </div>
+                            <div class="w-1/2">
+                                <label class="block text-xs text-gray-400 mb-1 mr-1">شماره تماس</label>
+                                <input type="tel" placeholder="09123456789" class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-3 text-sm text-left focus:outline-none focus:border-blue-500 transition-colors" dir="ltr">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1 mr-1">انتخاب تعداد صندلی</label>
+                            <div class="grid grid-cols-4 gap-2">
+                                <button class="bg-slate-800 hover:bg-blue-600 text-white font-bold py-2 px-3 rounded-xl transition-all">۱</button>
+                                <button class="bg-blue-600 text-white font-bold py-2 px-3 rounded-xl shadow-lg glow-accent">۲</button>
+                                <button class="bg-slate-800 hover:bg-blue-600 text-white font-bold py-2 px-3 rounded-xl transition-all">۳</button>
+                                <button class="bg-slate-800 hover:bg-blue-600 text-white font-bold py-2 px-3 rounded-xl transition-all">۴+</button>
+                            </div>
+                        </div>
+
+                        <button class="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold py-4 rounded-xl shadow-xl transition-all transform hover:-translate-y-0.5 mt-6 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-circle-check"></i>
+                            تایید و دریافت رسید صندلی
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Right Side: UCL Trophy Display Area -->
+            <div class="md:col-span-5 order-1 md:order-2 flex flex-col items-center justify-center text-center px-4">
+                <div class="relative group">
+                    <!-- Subtle glow behind the trophy -->
+                    <div class="absolute inset-0 bg-blue-500/20 rounded-full filter blur-3xl group-hover:bg-blue-400/30 transition-all duration-700"></div>
+                    
+                    <!-- Official UCL Trophy Image -->
+                    <img src="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcT4_3Kj-WlWv7ZP790mP2yGT3TXdptv1gZNTDSZZQhPSRXfnY1sOrWJQ99vB2SxfUhXIliryvU3fh4x-ow" 
+                         alt="UEFA Champions League Trophy" 
+                         class="h-64 md:h-80 w-auto object-contain drop-shadow-[0_10px_20px_rgba(255,255,255,0.15)] transform group-hover:scale-105 transition-transform duration-500">
+                </div>
+                
+                <div class="mt-4">
+                    <p class="text-xs text-blue-400 uppercase tracking-widest font-bold">UEFA Champions League</p>
+                    <p class="text-sm text-gray-400 mt-1">اتمسفر واقعی فوتسالی و هیجان قهرمانی اروپا</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full text-center py-4 text-xs text-gray-600 border-t border-slate-900">
+        &copy; ۲۰۲۶ تمامی حقوق برای پلتفرم رزرو اکران لیگ قهرمانان محفوظ است.
+    </footer>
+
+</body>
+</html>
+
+
+On Sun, 7 Jun 2026, 21:18 Amir Nd, <amirpocond@gmail.com> wrote:
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>رزرو سانس چمپیونزلیگ</title>
     <!-- Tailwind CSS -->
@@ -1281,409 +1417,4 @@ On Sun, 7 Jun 2026, 20:46 Amir Nd, <amirpocond@gmail.com> wrote:
                                 <input type="text" placeholder="مثال: علی علوی" class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500 transition-colors">
                             </div>
                             <div class="w-1/2">
-                                <label class="block text-xs text-gray-400 mb-1 mr-1">شماره تماس</label>
-                                <input type="tel" placeholder="09123456789" class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-3 text-sm text-left focus:outline-none focus:border-blue-500 transition-colors" dir="ltr">
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs text-gray-400 mb-1 mr-1">انتخاب تعداد صندلی</label>
-                            <div class="grid grid-cols-4 gap-2">
-                                <button class="bg-slate-800 hover:bg-blue-600 text-white font-bold py-2 px-3 rounded-xl transition-all">۱</button>
-                                <button class="bg-blue-600 text-white font-bold py-2 px-3 rounded-xl shadow-lg glow-accent">۲</button>
-                                <button class="bg-slate-800 hover:bg-blue-600 text-white font-bold py-2 px-3 rounded-xl transition-all">۳</button>
-                                <button class="bg-slate-800 hover:bg-blue-600 text-white font-bold py-2 px-3 rounded-xl transition-all">۴+</button>
-                            </div>
-                        </div>
-
-                        <button class="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold py-4 rounded-xl shadow-xl transition-all transform hover:-translate-y-0.5 mt-6 flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-circle-check"></i>
-                            تایید و دریافت رسید صندلی
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Right Side: UCL Trophy Display Area -->
-            <div class="md:col-span-5 order-1 md:order-2 flex flex-col items-center justify-center text-center px-4">
-                <div class="relative group">
-                    <!-- Subtle glow behind the trophy -->
-                    <div class="absolute inset-0 bg-blue-500/20 rounded-full filter blur-3xl group-hover:bg-blue-400/30 transition-all duration-700"></div>
-                    
-                    <!-- Official UCL Trophy Image -->
-                    <img src="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcT4_3Kj-WlWv7ZP790mP2yGT3TXdptv1gZNTDSZZQhPSRXfnY1sOrWJQ99vB2SxfUhXIliryvU3fh4x-ow" 
-                         alt="UEFA Champions League Trophy" 
-                         class="h-64 md:h-80 w-auto object-contain drop-shadow-[0_10px_20px_rgba(255,255,255,0.15)] transform group-hover:scale-105 transition-transform duration-500">
-                </div>
-                
-                <div class="mt-4">
-                    <p class="text-xs text-blue-400 uppercase tracking-widest font-bold">UEFA Champions League</p>
-                    <p class="text-sm text-gray-400 mt-1">اتمسفر واقعی فوتسالی و هیجان قهرمانی اروپا</p>
-                </div>
-            </div>
-
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="w-full text-center py-4 text-xs text-gray-600 border-t border-slate-900">
-        &copy; ۲۰۲۶ تمامی حقوق برای پلتفرم رزرو اکران لیگ قهرمانان محفوظ است.
-    </footer>
-
-</body>
-</html>
-
-
-On Sun, 7 Jun 2026, 20:32 Amir Nd, <amirpocond@gmail.com> wrote:
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ستاره‌های لیگ | ثبت‌نامه سانس‌ها</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        /* اتمسفر استادیوم و تم چمپیونزلیگ */
-        body { 
-            font-family: 'Segoe UI', Tahoma, sans-serif; 
-            background: radial-gradient(circle at top, #0c1a30 0%, #050b14 100%); 
-            min-height: 100vh; 
-            padding: 30px 20px; 
-            color: #f1f5f9;
-        }
-        
-        .container { max-width: 650px; margin: 0 auto; }
-        
-        /* کارت‌های شیشه‌ای مدرن (Glassmorphism) */
-        .card { 
-            background: rgba(16, 31, 56, 0.75); 
-            border-radius: 24px; 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5); 
-            overflow: hidden; 
-            margin-bottom: 25px; 
-            transition: all 0.3s ease;
-        }
-        
-        .card:hover {
-            border-color: rgba(0, 242, 254, 0.2);
-            box-shadow: 0 25px 60px rgba(0, 242, 254, 0.1);
-        }
-        
-        /* هدر استایل یوفا */
-        .header { 
-            background: linear-gradient(to bottom, rgba(13, 27, 49, 0.9), rgba(5, 11, 20, 0.9)); 
-            padding: 35px 20px; 
-            text-align: center; 
-            border-bottom: 2px solid #00f2fe;
-            position: relative;
-        }
-        
-        .header::after {
-            content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 2px;
-            background: linear-gradient(to right, transparent, #00f2fe, #4facfe, transparent);
-        }
-        
-        .header h1 { 
-            font-size: 26px; 
-            font-weight: 800;
-            color: #ffffff; 
-            text-shadow: 0 0 15px rgba(0, 242, 254, 0.6);
-            letter-spacing: 0.5px;
-        }
-        
-        .header p { color: #94a3b8; font-size: 14px; margin-top: 8px; }
-        
-        /* کارت‌های انتخاب سانس مثل براکت‌های مسابقات */
-        .sanad-box { display: flex; gap: 15px; padding: 25px 20px; }
-        
-        .sanad-card { 
-            flex: 1; 
-            background: rgba(5, 11, 20, 0.6); 
-            padding: 20px; 
-            border-radius: 16px; 
-            text-align: center; 
-            cursor: pointer; 
-            border: 1px solid rgba(255, 255, 255, 0.05); 
-            transition: transform 0.2s, border-color 0.3s, box-shadow 0.3s; 
-        }
-        
-        .sanad-card:hover {
-            transform: translateY(-4px);
-            border-color: #4facfe;
-        }
-        
-        /* افکت انتخاب چمپیونزلیگ (درخشندگی آبی فسفری) */
-        .sanad-card.selected { 
-            border-color: #00f2fe; 
-            background: rgba(0, 242, 254, 0.08); 
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.25); 
-        }
-        
-        .sanad-card h3 { color: #ffffff; font-size: 17px; margin-bottom: 12px; }
-        
-        .sanad-card .price { 
-            font-size: 15px; 
-            font-weight: bold; 
-            color: #00f2fe; 
-            background: rgba(0, 242, 254, 0.1);
-            padding: 4px 10px;
-            border-radius: 20px;
-            display: inline-block;
-        }
-        
-        .sanad-card .capacity { font-size: 13px; color: #94a3b8; margin-top: 12px; }
-        .sanad-card .capacity span { font-weight: bold; color: #fff; }
-
-        /* فرم‌ها و اینپوت‌های مدرن تیره */
-        .form-section { padding: 5px 25px 30px 25px; }
-        .input-group { margin-bottom: 25px; }
-        label { display: block; margin-bottom: 10px; font-size: 14px; font-weight: 600; color: #cbd5e1; }
-        
-        input { 
-            width: 100%; 
-            padding: 15px 20px; 
-            background: rgba(5, 11, 20, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-radius: 14px; 
-            font-size: 16px; 
-            color: #ffffff;
-            transition: all 0.3s; 
-            font-family: inherit; 
-        }
-        
-        input:focus { 
-            outline: none; 
-            border-color: #00f2fe; 
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
-            background: rgba(5, 11, 20, 0.9);
-        }
-        
-        /* دکمه‌های شکیل و روان */
-        .btn { 
-            width: 100%; 
-            padding: 16px; 
-            border: none; 
-            border-radius: 14px; 
-            font-size: 16px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-            font-family: inherit; 
-        }
-        
-        .btn-primary { 
-            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%); 
-            color: #050b14; 
-            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
-        }
-        
-        .btn-primary:hover:not(:disabled) { 
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.5);
-        }
-        
-        .btn-primary:disabled { background: #1e293b; color: #64748b; cursor: not-allowed; box-shadow: none; border: 1px solid rgba(255,255,255,0.05); }
-        
-        .btn-success { 
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%); 
-            color: white; 
-            margin-top: 15px; 
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
-        }
-        .btn-success:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4); }
-        
-        /* بخش لیست بازیکنان / ثبت‌نامی‌ها */
-        .registrants-list { padding: 25px; }
-        .registrants-list h3 { color: #ffffff; margin-bottom: 20px; font-size: 16px; font-weight: 700; border-right: 3px solid #00f2fe; padding-right: 10px; }
-        
-        .registrant-item { 
-            background: rgba(5, 11, 20, 0.4); 
-            padding: 14px 20px; 
-            margin-bottom: 12px; 
-            border-radius: 14px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            animation: fadeIn 0.4s ease;
-        }
-        
-        .registrant-name { font-weight: 600; color: #f8fafc; font-size: 15px; }
-        .registrant-date { font-size: 11px; color: #64748b; margin-top: 4px; }
-        
-        /* دکمه حذف فانتزی سرخ */
-        .delete-btn { 
-            background: rgba(239, 68, 68, 0.1); 
-            color: #f87171; 
-            border: 1px solid rgba(239, 68, 68, 0.2); 
-            padding: 6px 14px; 
-            border-radius: 10px; 
-            cursor: pointer; 
-            font-size: 12px; 
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-        .delete-btn:hover { background: #ef4444; color: white; }
-        
-        .empty-list { color: #64748b; text-align: center; padding: 30px; font-size: 14px; }
-        
-        /* پیغام‌های پاپ آپ لایت سیستم */
-        .message { padding: 14px; border-radius: 12px; margin-bottom: 20px; text-align: center; font-size: 14px; font-weight: 600; animation: slideDown 0.3s ease; }
-        .message-success { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); }
-        .message-error { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); }
-        .message-warning { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.2); }
-        
-        .hidden { display: none !important; }
-        
-        /* انیمیشن‌ها */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* پنل مخفی مدیریت */
-        .admin-trigger { position: fixed; bottom: 20px; left: 20px; width: 40px; height: 40px; background: rgba(255,255,255,0.03); border-radius: 50%; cursor: pointer; z-index: 998; }
-        .admin-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 11, 20, 0.85); z-index: 999; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
-        .admin-modal.show { display: flex; }
-        .admin-box { background: #0c1a30; padding: 35px; border-radius: 24px; max-width: 400px; width: 90%; border: 1px solid rgba(255,255,255,0.1); }
-        .admin-box h3 { margin-bottom: 10px; color: #fff; }
-        .admin-box button { background: #ef4444; margin-top: 12px; color: white; border: none; padding: 12px; border-radius: 12px; width: 100%; cursor: pointer; font-weight: bold; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- کارت اصلی فرم -->
-        <div class="card">
-            <div class="header">
-                <h1>⚽ ثبت‌نام بزرگ‌ترین سانس‌های یوفا</h1>
-                <p>جایگاه خود را در مسابقات امشب قفل کنید</p>
-            </div>
-
-            <div class="sanad-box">
-                <div class="sanad-card" data-type="janedi" id="janediCard" onclick="selectSanad('janedi')">
-                    <h3>🏆 سانس جنیدی</h3>
-                    <div class="price">۴۳,۰۰۰ تومان</div>
-                    <div class="capacity">ظرفیت باقی‌مانده: <span id="janediCapacity">..</span> نفر</div>
-                </div>
-                <div class="sanad-card" data-type="farhangian" id="farhangianCard" onclick="selectSanad('farhangian')">
-                    <h3>⭐ سانس فرهنگیان</h3>
-                    <div class="price">۱۰,۰۰۰ تومان</div>
-                    <div class="capacity">ظرفیت باقی‌مانده: <span id="farhangianCapacity">..</span> نفر</div>
-                </div>
-            </div>
-
-            <div class="form-section" id="formSection">
-                <div id="messageArea"></div>
-
-                <div class="input-group">
-                    <label>🏃 نام و نام خانوادگی بازیکن</label>
-                    <input type="text" id="fullName" placeholder="نام خود را برای ورود به زمین بنویسید...">
-                </div>
-
-                <button class="btn btn-primary" id="preRegisterBtn">💥 ثبت‌نام اولیه و رزرو</button>
-                
-                <div id="paymentSection" class="hidden">
-                    <button class="btn btn-success" id="fakePayBtn">⚡ تایید نهایی و دریافت بلیط</button>
-                    <p style="font-size: 12px; color: #64748b; margin-top: 12px; text-align: center;">
-                        با کلیک روی دکمه فوق، جایگاه شما فوراً در سرور فایربیس ثبت قطعی می‌شود.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- کارت لیست نتایج -->
-        <div class="card">
-            <div class="registrants-list">
-                <h3 id="listTitle">📋 لیست ترکیب اصلی (در حال برقراری اتصال...)</h3>
-                <div id="registrantsList">
-                    <div class="empty-list">در حال هماهنگی آنی با دیتابیس یوفا...</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- دکمه نامرئی ورود به پنل ادمین -->
-    <div class="admin-trigger" id="adminTrigger" onclick="showAdminPanel()"></div>
-    
-    <div class="admin-modal" id="adminModal">
-        <div class="admin-box">
-            <h3>🔧 مدیریت استادیوم</h3>
-            <input type="password" id="adminPass" placeholder="رمز عبور مدیریت">
-            <button id="resetBtn" onclick="resetSystem()">🔄 ریست و تخلیه کل دیتابیس</button>
-            <button id="closeAdminBtn" onclick="hideAdminPanel()" style="background: #334155; margin-top: 8px;">انصراف</button>
-            <p style="font-size: 11px; margin-top: 15px; text-align: center; color: #64748b;">رمز پیش‌فرض: 1234</p>
-        </div>
-    </div>
-
-    <!-- کانفیگ جدید و اختصاصی شما -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBzWbFwhatvsj9NjzODGbwAkBAkSX1z16U",
-            authDomain: "uefa-7cbce.firebaseapp.com",
-            databaseURL: "https://uefa-7cbce-default-rtdb.firebaseio.com",
-            projectId: "uefa-7cbce",
-            storageBucket: "uefa-7cbce.firebasestorage.app",
-            messagingSenderId: "266513606039",
-            appId: "1:266513606039:web:7181d11916c61894cb10d2"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-        const dbRef = ref(db, 'sanadSystem/data');
-
-        let sanads = {
-            janedi: { name: 'جنیدی', capacity: 10, registrants: [] },
-            farhangian: { name: 'فرهنگیان', capacity: 12, registrants: [] }
-        };
-        
-        let selectedType = 'janedi';
-        let pendingUser = null;
-
-        // گوش به زنگ بودن برای تغییرات آنی
-        onValue(dbRef, (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                sanads = data;
-            } else {
-                saveData();
-            }
-            updateUI();
-        });
-
-        async function saveData() {
-            try {
-                await set(dbRef, sanads);
-            } catch (err) {
-                console.error("خطا در فایربیس:", err);
-                showMessage('خطا در ذخیره‌سازی داده‌ها بر روی سرور!', 'error');
-            }
-        }
-
-        function updateCapacityDisplay() {
-            const janediCount = sanads.janedi.registrants ? Object.values(sanads.janedi.registrants).length : 0;
-            const farhangianCount = sanads.farhangian.registrants ? Object.values(sanads.farhangian.registrants).length : 0;
-            
-            document.getElementById('janediCapacity').innerText = sanads.janedi.capacity - janediCount;
-            document.getElementById('farhangianCapacity').innerText = sanads.farhangian.capacity - farhangianCount;
-        }
-
-        function showMessage(text, type = 'error') {
-            const msgDiv = document.getElementById('messageArea');
-            msgDiv.innerHTML = `<div class="message message-${type}">${text}</div>`;
-            setTimeout(() => { if (msgDiv.innerHTML.includes(text)) msgDiv.innerHTML = ''; }, 4000);
-        }
-
-        function updateUI() {
-            const currentSanad = sanads[selectedType];
-            const currentRegistrants = currentSanad.registrants ? Object.values(currentSanad.registrants) : [];
-            const remaining = currentSanad.capacity - currentRegistrants.length;
-            
-            updateCapacityDisplay();
-            
-            document.get
+                                <la
