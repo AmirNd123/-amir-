@@ -1,233 +1,460 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UCL Heavy UI</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ستاره‌های لیگ | ثبت‌نامه سانس‌ها</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* اتمسفر استادیوم و تم چمپیونزلیگ */
+        body { 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            background: radial-gradient(circle at top, #0c1a30 0%, #050b14 100%); 
+            min-height: 100vh; 
+            padding: 30px 20px; 
+            color: #f1f5f9;
+        }
+        
+        .container { max-width: 650px; margin: 0 auto; }
+        
+        /* کارت‌های شیشه‌ای مدرن (Glassmorphism) */
+        .card { 
+            background: rgba(16, 31, 56, 0.75); 
+            border-radius: 24px; 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); 
+            overflow: hidden; 
+            margin-bottom: 25px; 
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            border-color: rgba(0, 242, 254, 0.2);
+            box-shadow: 0 25px 60px rgba(0, 242, 254, 0.1);
+        }
+        
+        /* هدر استایل یوفا */
+        .header { 
+            background: linear-gradient(to bottom, rgba(13, 27, 49, 0.9), rgba(5, 11, 20, 0.9)); 
+            padding: 35px 20px; 
+            text-align: center; 
+            border-bottom: 2px solid #00f2fe;
+            position: relative;
+        }
+        
+        .header::after {
+            content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(to right, transparent, #00f2fe, #4facfe, transparent);
+        }
+        
+        .header h1 { 
+            font-size: 26px; 
+            font-weight: 800;
+            color: #ffffff; 
+            text-shadow: 0 0 15px rgba(0, 242, 254, 0.6);
+            letter-spacing: 0.5px;
+        }
+        
+        .header p { color: #94a3b8; font-size: 14px; margin-top: 8px; }
+        
+        /* کارت‌های انتخاب سانس مثل براکت‌های مسابقات */
+        .sanad-box { display: flex; gap: 15px; padding: 25px 20px; }
+        
+        .sanad-card { 
+            flex: 1; 
+            background: rgba(5, 11, 20, 0.6); 
+            padding: 20px; 
+            border-radius: 16px; 
+            text-align: center; 
+            cursor: pointer; 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            transition: transform 0.2s, border-color 0.3s, box-shadow 0.3s; 
+        }
+        
+        .sanad-card:hover {
+            transform: translateY(-4px);
+            border-color: #4facfe;
+        }
+        
+        /* افکت انتخاب چمپیونزلیگ (درخشندگی آبی فسفری) */
+        .sanad-card.selected { 
+            border-color: #00f2fe; 
+            background: rgba(0, 242, 254, 0.08); 
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.25); 
+        }
+        
+        .sanad-card h3 { color: #ffffff; font-size: 17px; margin-bottom: 12px; }
+        
+        .sanad-card .price { 
+            font-size: 15px; 
+            font-weight: bold; 
+            color: #00f2fe; 
+            background: rgba(0, 242, 254, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        
+        .sanad-card .capacity { font-size: 13px; color: #94a3b8; margin-top: 12px; }
+        .sanad-card .capacity span { font-weight: bold; color: #fff; }
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+        /* فرم‌ها و اینپوت‌های مدرن تیره */
+        .form-section { padding: 5px 25px 30px 25px; }
+        .input-group { margin-bottom: 25px; }
+        label { display: block; margin-bottom: 10px; font-size: 14px; font-weight: 600; color: #cbd5e1; }
+        
+        input { 
+            width: 100%; 
+            padding: 15px 20px; 
+            background: rgba(5, 11, 20, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 14px; 
+            font-size: 16px; 
+            color: #ffffff;
+            transition: all 0.3s; 
+            font-family: inherit; 
+        }
+        
+        input:focus { 
+            outline: none; 
+            border-color: #00f2fe; 
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+            background: rgba(5, 11, 20, 0.9);
+        }
+        
+        /* دکمه‌های شکیل و روان */
+        .btn { 
+            width: 100%; 
+            padding: 16px; 
+            border: none; 
+            border-radius: 14px; 
+            font-size: 16px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            font-family: inherit; 
+        }
+        
+        .btn-primary { 
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%); 
+            color: #050b14; 
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+        }
+        
+        .btn-primary:hover:not(:disabled) { 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.5);
+        }
+        
+        .btn-primary:disabled { background: #1e293b; color: #64748b; cursor: not-allowed; box-shadow: none; border: 1px solid rgba(255,255,255,0.05); }
+        
+        .btn-success { 
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%); 
+            color: white; 
+            margin-top: 15px; 
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+        }
+        .btn-success:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4); }
+        
+        /* بخش لیست بازیکنان / ثبت‌نامی‌ها */
+        .registrants-list { padding: 25px; }
+        .registrants-list h3 { color: #ffffff; margin-bottom: 20px; font-size: 16px; font-weight: 700; border-right: 3px solid #00f2fe; padding-right: 10px; }
+        
+        .registrant-item { 
+            background: rgba(5, 11, 20, 0.4); 
+            padding: 14px 20px; 
+            margin-bottom: 12px; 
+            border-radius: 14px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            animation: fadeIn 0.4s ease;
+        }
+        
+        .registrant-name { font-weight: 600; color: #f8fafc; font-size: 15px; }
+        .registrant-date { font-size: 11px; color: #64748b; margin-top: 4px; }
+        
+        /* دکمه حذف فانتزی سرخ */
+        .delete-btn { 
+            background: rgba(239, 68, 68, 0.1); 
+            color: #f87171; 
+            border: 1px solid rgba(239, 68, 68, 0.2); 
+            padding: 6px 14px; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            font-size: 12px; 
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .delete-btn:hover { background: #ef4444; color: white; }
+        
+        .empty-list { color: #64748b; text-align: center; padding: 30px; font-size: 14px; }
+        
+        /* پیغام‌های پاپ آپ لایت سیستم */
+        .message { padding: 14px; border-radius: 12px; margin-bottom: 20px; text-align: center; font-size: 14px; font-weight: 600; animation: slideDown 0.3s ease; }
+        .message-success { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); }
+        .message-error { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); }
+        .message-warning { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.2); }
+        
+        .hidden { display: none !important; }
+        
+        /* انیمیشن‌ها */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-<style>
-body{
-margin:0;
-overflow:hidden;
-font-family:Arial;
-background:#000;
-color:white;
-}
-
-/* stadium + overlays */
-.bg{
-position:fixed;
-width:100%;
-height:100%;
-background:
-url("https://images.unsplash.com/photo-1508098682722-e99c43a406b2") center/cover;
-filter:brightness(0.35) contrast(1.2);
-z-index:-3;
-}
-
-.overlay1{
-position:fixed;
-width:100%;
-height:100%;
-background:radial-gradient(circle at center,rgba(0,0,80,0.5),black 70%);
-z-index:-2;
-}
-
-.overlay2{
-position:fixed;
-width:100%;
-height:100%;
-background:
-linear-gradient(45deg,rgba(108,92,231,0.15),transparent,rgba(0,210,255,0.15));
-mix-blend-mode:screen;
-z-index:-1;
-animation:move 6s infinite alternate;
-}
-
-@keyframes move{
-0%{transform:translateX(-20px)}
-100%{transform:translateX(20px)}
-}
-
-/* floating trophy glow */
-.trophy{
-position:absolute;
-top:5%;
-left:50%;
-transform:translateX(-50%);
-width:140px;
-filter:drop-shadow(0 0 25px #6c5ce7);
-animation:float 3s ease-in-out infinite;
-opacity:0.9;
-}
-
-@keyframes float{
-0%,100%{transform:translate(-50%,0)}
-50%{transform:translate(-50%,-20px)}
-}
-
-/* title chaos style */
-h1{
-text-align:center;
-margin-top:180px;
-font-size:30px;
-letter-spacing:5px;
-opacity:0;
-text-shadow:0 0 20px #6c5ce7;
-}
-
-/* main UI */
-.panel{
-position:absolute;
-top:55%;
-left:50%;
-transform:translate(-50%,-50%);
-width:360px;
-padding:20px;
-background:rgba(255,255,255,0.08);
-backdrop-filter:blur(18px);
-border:1px solid rgba(255,255,255,0.2);
-border-radius:18px;
-box-shadow:
-0 0 30px rgba(108,92,231,0.4),
-inset 0 0 20px rgba(255,255,255,0.05);
-}
-
-/* tabs chaotic */
-.tabs{
-display:flex;
-gap:8px;
-margin-bottom:10px;
-}
-
-.tab{
-flex:1;
-padding:10px;
-border:none;
-background:rgba(255,255,255,0.1);
-color:white;
-cursor:pointer;
-transition:.3s;
-}
-
-.tab.active{
-background:linear-gradient(90deg,#6c5ce7,#00d2ff);
-box-shadow:0 0 15px #6c5ce7;
-}
-
-/* input chaos */
-input{
-width:100%;
-padding:10px;
-border:none;
-border-radius:10px;
-outline:none;
-margin-top:10px;
-}
-
-/* button neon */
-button.action{
-width:100%;
-margin-top:10px;
-padding:12px;
-border:none;
-border-radius:10px;
-background:linear-gradient(90deg,#6c5ce7,#00d2ff);
-color:white;
-font-weight:bold;
-cursor:pointer;
-box-shadow:0 0 20px #6c5ce7;
-}
-
-/* list heavy */
-.list{
-margin-top:10px;
-max-height:140px;
-overflow:auto;
-font-size:14px;
-}
-
-.item{
-padding:8px;
-border-bottom:1px solid rgba(255,255,255,0.1);
-display:flex;
-justify-content:space-between;
-}
-
-.badge{
-font-size:10px;
-padding:3px 6px;
-background:#6c5ce7;
-border-radius:8px;
-}
-</style>
+        /* پنل مخفی مدیریت */
+        .admin-trigger { position: fixed; bottom: 20px; left: 20px; width: 40px; height: 40px; background: rgba(255,255,255,0.03); border-radius: 50%; cursor: pointer; z-index: 998; }
+        .admin-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 11, 20, 0.85); z-index: 999; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .admin-modal.show { display: flex; }
+        .admin-box { background: #0c1a30; padding: 35px; border-radius: 24px; max-width: 400px; width: 90%; border: 1px solid rgba(255,255,255,0.1); }
+        .admin-box h3 { margin-bottom: 10px; color: #fff; }
+        .admin-box button { background: #ef4444; margin-top: 12px; color: white; border: none; padding: 12px; border-radius: 12px; width: 100%; cursor: pointer; font-weight: bold; }
+    </style>
 </head>
-
 <body>
+    <div class="container">
+        <!-- کارت اصلی فرم -->
+        <div class="card">
+            <div class="header">
+                <h1>⚽ ثبت‌نام بزرگ‌ترین سانس‌های یوفا</h1>
+                <p>جایگاه خود را در مسابقات امشب قفل کنید</p>
+            </div>
 
-<div class="bg"></div>
-<div class="overlay1"></div>
-<div class="overlay2"></div>
+            <div class="sanad-box">
+                <div class="sanad-card" data-type="janedi" id="janediCard" onclick="selectSanad('janedi')">
+                    <h3>🏆 سانس جنیدی</h3>
+                    <div class="price">۴۳,۰۰۰ تومان</div>
+                    <div class="capacity">ظرفیت باقی‌مانده: <span id="janediCapacity">..</span> نفر</div>
+                </div>
+                <div class="sanad-card" data-type="farhangian" id="farhangianCard" onclick="selectSanad('farhangian')">
+                    <h3>⭐ سانس فرهنگیان</h3>
+                    <div class="price">۱۰,۰۰۰ تومان</div>
+                    <div class="capacity">ظرفیت باقی‌مانده: <span id="farhangianCapacity">..</span> نفر</div>
+                </div>
+            </div>
 
-<img class="trophy" src="https://upload.wikimedia.org/wikipedia/en/b/bf/UEFA_Champions_League_logo_2.svg">
+            <div class="form-section" id="formSection">
+                <div id="messageArea"></div>
 
-<h1>UEFA CHAMPIONS LEAGUE SYSTEM</h1>
+                <div class="input-group">
+                    <label>🏃 نام و نام خانوادگی بازیکن</label>
+                    <input type="text" id="fullName" placeholder="نام خود را برای ورود به زمین بنویسید...">
+                </div>
 
-<div class="panel">
+                <button class="btn btn-primary" id="preRegisterBtn">💥 ثبت‌نام اولیه و رزرو</button>
+                
+                <div id="paymentSection" class="hidden">
+                    <button class="btn btn-success" id="fakePayBtn">⚡ تایید نهایی و دریافت بلیط</button>
+                    <p style="font-size: 12px; color: #64748b; margin-top: 12px; text-align: center;">
+                        با کلیک روی دکمه فوق، جایگاه شما فوراً در سرور فایربیس ثبت قطعی می‌شود.
+                    </p>
+                </div>
+            </div>
+        </div>
 
-<div class="tabs">
-<button class="tab active" id="a1" onclick="set('janedi')">JANEDI</button>
-<button class="tab" id="a2" onclick="set('farhangian')">FARHANGIAN</button>
-</div>
+        <!-- کارت لیست نتایج -->
+        <div class="card">
+            <div class="registrants-list">
+                <h3 id="listTitle">📋 لیست ترکیب اصلی (در حال برقراری اتصال...)</h3>
+                <div id="registrantsList">
+                    <div class="empty-list">در حال هماهنگی آنی با دیتابیس یوفا...</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<input id="name" placeholder="Player Name">
+    <!-- دکمه نامرئی ورود به پنل ادمین -->
+    <div class="admin-trigger" id="adminTrigger" onclick="showAdminPanel()"></div>
+    
+    <div class="admin-modal" id="adminModal">
+        <div class="admin-box">
+            <h3>🔧 مدیریت استادیوم</h3>
+            <input type="password" id="adminPass" placeholder="رمز عبور مدیریت">
+            <button id="resetBtn" onclick="resetSystem()">🔄 ریست و تخلیه کل دیتابیس</button>
+            <button id="closeAdminBtn" onclick="hideAdminPanel()" style="background: #334155; margin-top: 8px;">انصراف</button>
+            <p style="font-size: 11px; margin-top: 15px; text-align: center; color: #64748b;">رمز پیش‌فرض: 1234</p>
+        </div>
+    </div>
 
-<button class="action" onclick="add()">REGISTER PLAYER</button>
+    <!-- کانفیگ جدید و اختصاصی شما -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-<div class="list" id="list"></div>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBzWbFwhatvsj9NjzODGbwAkBAkSX1z16U",
+            authDomain: "uefa-7cbce.firebaseapp.com",
+            databaseURL: "https://uefa-7cbce-default-rtdb.firebaseio.com",
+            projectId: "uefa-7cbce",
+            storageBucket: "uefa-7cbce.firebasestorage.app",
+            messagingSenderId: "266513606039",
+            appId: "1:266513606039:web:7181d11916c61894cb10d2"
+        };
 
-</div>
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const dbRef = ref(db, 'sanadSystem/data');
 
-<script>
-let type="janedi";
-let data={janedi:[],farhangian:[]};
+        let sanads = {
+            janedi: { name: 'جنیدی', capacity: 10, registrants: [] },
+            farhangian: { name: 'فرهنگیان', capacity: 12, registrants: [] }
+        };
+        
+        let selectedType = 'janedi';
+        let pendingUser = null;
 
-function set(t){
-type=t;
-document.getElementById("a1").classList.remove("active");
-document.getElementById("a2").classList.remove("active");
-document.getElementById(t==="janedi"?"a1":"a2").classList.add("active");
-render();
-}
+        // گوش به زنگ بودن برای تغییرات آنی
+        onValue(dbRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                sanads = data;
+            } else {
+                saveData();
+            }
+            updateUI();
+        });
 
-function add(){
-let n=document.getElementById("name").value;
-if(!n)return;
+        async function saveData() {
+            try {
+                await set(dbRef, sanads);
+            } catch (err) {
+                console.error("خطا در فایربیس:", err);
+                showMessage('خطا در ذخیره‌سازی داده‌ها بر روی سرور!', 'error');
+            }
+        }
 
-data[type].push(n);
-document.getElementById("name").value="";
-render();
+        function updateCapacityDisplay() {
+            const janediCount = sanads.janedi.registrants ? Object.values(sanads.janedi.registrants).length : 0;
+            const farhangianCount = sanads.farhangian.registrants ? Object.values(sanads.farhangian.registrants).length : 0;
+            
+            document.getElementById('janediCapacity').innerText = sanads.janedi.capacity - janediCount;
+            document.getElementById('farhangianCapacity').innerText = sanads.farhangian.capacity - farhangianCount;
+        }
 
-gsap.from(".item:last-child",{x:-30,opacity:0,duration:0.3});
-}
+        function showMessage(text, type = 'error') {
+            const msgDiv = document.getElementById('messageArea');
+            msgDiv.innerHTML = `<div class="message message-${type}">${text}</div>`;
+            setTimeout(() => { if (msgDiv.innerHTML.includes(text)) msgDiv.innerHTML = ''; }, 4000);
+        }
 
-function render(){
-let list=document.getElementById("list");
-list.innerHTML="";
+        function updateUI() {
+            const currentSanad = sanads[selectedType];
+            const currentRegistrants = currentSanad.registrants ? Object.values(currentSanad.registrants) : [];
+            const remaining = currentSanad.capacity - currentRegistrants.length;
+            
+            updateCapacityDisplay();
+            
+            document.getElementById('janediCard').classList.remove('selected');
+            document.getElementById('farhangianCard').classList.remove('selected');
+            document.getElementById(`${selectedType}Card`).classList.add('selected');
+            
+            const preRegisterBtn = document.getElementById('preRegisterBtn');
+            const paymentSection = document.getElementById('paymentSection');
+            const nameInput = document.getElementById('fullName');
+            
+            if (remaining <= 0) {
+                preRegisterBtn.disabled = true;
+                preRegisterBtn.innerText = '🚫 تکمیل ظرفیت سانس';
+                nameInput.disabled = true;
+            } else {
+                preRegisterBtn.disabled = false;
+                preRegisterBtn.innerText = '💥 ثبت‌نام اولیه و رزرو';
+                nameInput.disabled = false;
+            }
+            
+            if (pendingUser !== null && remaining > 0) {
+                paymentSection.classList.remove('hidden');
+                preRegisterBtn.disabled = true;
+                preRegisterBtn.innerText = '⏳ در انتظار تایید بلیط...';
+                nameInput.disabled = true;
+            } else if (pendingUser === null) {
+                paymentSection.classList.add('hidden');
+            }
+            
+            const listContainer = document.getElementById('registrantsList');
+            const listTitle = document.getElementById('listTitle');
+            
+            listTitle.innerHTML = `⚽ بازیکنان حاضر در سانس ${currentSanad.name} (${currentRegistrants.length} از ${currentSanad.capacity})`;
+            
+            if (currentRegistrants.length === 0) {
+                listContainer.innerHTML = '<div class="empty-list">هنوز هیچ بازیکنی برای این سانس وارد زمین نشده است.</div>';
+            } else {
+                let html = '';
+                // خواندن آی‌دی‌های ثبت‌شده روی این دستگاه از LocalStorage
+                let myRegisteredIds = JSON.parse(localStorage.getItem('my_ucl_registrations') || '[]');
 
-data[type].forEach((p,i)=>{
-let div=document.createElement("div");
-div.className="item";
-div.innerHTML=`<span>⚽ ${p}</span><span class="badge">${type}</span>`;
-list.appendChild(div);
-});
-}
+                currentRegistrants.forEach((reg, index) => {
+                    // فقط اگر آی‌دی این کاربر در مرورگر فعلی موجود باشد، دکمه حذف نمایش داده می‌شود
+                    const isOwner = myRegisteredIds.includes(reg.id);
+                    const deleteBtnHtml = isOwner ? `<button class="delete-btn" onclick="deleteUser(${index})">🗑️ لغو ثبت‌نام</button>` : '';
 
-gsap.to("h1",{opacity:1,y:10,duration:1});
-gsap.from(".panel",{opacity:0,scale:0.8,duration:1,delay:0.5});
-</script>
+                    html += `
+                        <div class="registrant-item">
+                            <div class="registrant-info">
+                                <div class="registrant-name">${escapeHtml(reg.name)}</div>
+                                <div class="registrant-date">${reg.date}</div>
+                            </div>
+                            ${deleteBtnHtml}
+                        </div>
+                    `;
+                });
+                listContainer.innerHTML = html;
+            }
+        }
 
-</body>
-</html>
+        async function deleteUser(index) {
+            if (!confirm('آیا مطمئن هستید که می‌خواهید نام خود را از ترکیب این سانس حذف کنید؟')) return;
+            const currentSanad = sanads[selectedType];
+            if (currentSanad.registrants) {
+                let list = Object.values(currentSanad.registrants);
+                
+                // پاک کردن آی‌دی از LocalStorage دستگاه خود کاربر
+                const removedItem = list[index];
+                if (removedItem && removedItem.id) {
+                    let myRegisteredIds = JSON.parse(localStorage.getItem('my_ucl_registrations') || '[]');
+                    myRegisteredIds = myRegisteredIds.filter(id => id !== removedItem.id);
+                    localStorage.setItem('my_ucl_registrations', JSON.stringify(myRegisteredIds));
+                }
+
+                list.splice(index, 1);
+                currentSanad.registrants = list;
+                await saveData();
+                showMessage('ثبت‌نام شما با موفقیت لغو شد.', 'success');
+            }
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function preRegister() {
+            const currentSanad = sanads[selectedType];
+            const currentRegistrants = currentSanad.registrants ? Object.values(currentSanad.registrants) : [];
+            
+            if ((currentSanad.capacity - currentRegistrants.length) <= 0) {
+                showMessage('ظرفیت استادیوم برای این سانس تکمیل است!', 'error');
+                return;
+            }
+            const name = document.getElementById('fullName').value.trim();
+            if (name === '') {
+                showMessage('لطفاً ابتدا نام و نام خانوادگی خود را بنویسید.', 'error');
+                return;
+            }
+            if (currentRegistrants.some(r => r.name === name)) {
+                showMessage('بازیکنی با این نام قبلاً در این سانس ثبت‌نام کرده است.', 'error');
+                return;
+            }
+            
+            pendingUser = { name: name, type: selectedType };
+            updateUI();
+            showMessage(`رزرو موقت انجام شد؛ حالا روی دکمه تایید نهایی کلیک کنید.`, 'warning');
+        }
+
+        async function finalRegistration() {
+            if (pendi
