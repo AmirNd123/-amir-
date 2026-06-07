@@ -6,11 +6,12 @@
 <title>ثبت‌نام سانس‌ها</title>
 
 <style>
-body { font-family:tahoma; background:#667eea; color:#fff; }
-.container{max-width:700px;margin:auto;padding:20px;}
-.card{background:#fff;color:#000;padding:20px;border-radius:20px;margin-bottom:20px;}
-button{padding:10px;border:none;border-radius:10px;cursor:pointer;}
-.btn{background:#8b5cf6;color:#fff;}
+body{font-family:tahoma;background:#667eea;color:#fff;margin:0;padding:20px}
+.container{max-width:700px;margin:auto}
+.card{background:#fff;color:#000;padding:20px;border-radius:20px;margin-bottom:20px}
+button{padding:10px;border:none;border-radius:10px;cursor:pointer;margin:5px}
+.btn{background:#8b5cf6;color:#fff}
+input{padding:10px;width:100%;margin:10px 0}
 </style>
 </head>
 
@@ -19,72 +20,71 @@ button{padding:10px;border:none;border-radius:10px;cursor:pointer;}
 <div class="container">
 
 <div class="card">
-<h2>ثبت‌نام سانس</h2>
+<h2>ثبت‌نام سانس‌ها</h2>
 
-<div>
 <button onclick="selectSanad('janedi')">جنیدی</button>
 <button onclick="selectSanad('farhangian')">فرهنگیان</button>
-</div>
-
-<br>
 
 <input id="fullName" placeholder="نام">
-<br><br>
 
 <button class="btn" onclick="preRegister()">ثبت اولیه</button>
-<button class="btn" onclick="finalRegistration()">تایید نهایی</button>
+<button class="btn" onclick="finalRegistration()">ثبت نهایی</button>
 
-<p id="msg"></p>
+<div id="messageArea"></div>
 </div>
 
 <div class="card">
-<h3>لیست ثبت‌نام</h3>
-<div id="list"></div>
+<h3>لیست ثبت‌نام‌ها</h3>
+<div id="registrantsList"></div>
 </div>
 
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot } 
+import { getFirestore, collection, addDoc, onSnapshot }
 from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
 const firebaseConfig = {
-apiKey: "AIzaSyBmOWgEU69uns5wArDY90EOFkQBzh5PlqY",
-authDomain: "amir-e5fa8.firebaseapp.com",
-projectId: "amir-e5fa8",
-storageBucket: "amir-e5fa8.firebasestorage.app",
-messagingSenderId: "1002836553065",
-appId: "1:1002836553065:web:cbc6d813ebe8c7349761f8"
+apiKey:"AIzaSyBmOWgEU69uns5wArDY90EOFkQBzh5PlqY",
+authDomain:"amir-e5fa8.firebaseapp.com",
+projectId:"amir-e5fa8",
+storageBucket:"amir-e5fa8.firebasestorage.app",
+messagingSenderId:"1002836553065",
+appId:"1:1002836553065:web:cbc6d813ebe8c7349761f8"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-let selectedType="janedi";
+let selected="janedi";
 let pending=null;
 
-window.selectSanad=(t)=>selectedType=t;
+window.selectSanad=(t)=>selected=t;
 
 window.preRegister=()=>{
-let name=document.getElementById("fullName").value;
-if(!name){msg("اسم وارد کن");return;}
-pending={name,type:selectedType};
-msg("مرحله اول انجام شد");
+let name=document.getElementById("fullName").value.trim();
+if(!name)return alert("اسم وارد کن");
+pending={name,type:selected};
+alert("مرحله اول انجام شد");
 };
 
 window.finalRegistration=async()=>{
 if(!pending)return;
-await addDoc(collection(db,"registrations"),pending);
+
+await addDoc(collection(db,"registrations"),{
+name:pending.name,
+type:pending.type,
+time:Date.now()
+});
+
 pending=null;
-msg("ثبت شد ✅");
+alert("ثبت شد ✅");
 };
 
-function msg(t){document.getElementById("msg").innerText=t;}
-
 onSnapshot(collection(db,"registrations"),(snap)=>{
-let data=snap.docs.map(d=>d.data());
-document.getElementById("list").innerHTML=
+const data=snap.docs.map(d=>d.data());
+document.getElementById("registrantsList").innerHTML=
 data.map(x=>`<div>${x.name} - ${x.type}</div>`).join("");
 });
 </script>
