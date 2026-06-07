@@ -1,93 +1,72 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ثبت‌نام سانس‌ها</title>
-
-<style>
-body{font-family:tahoma;background:#667eea;color:#fff;margin:0;padding:20px}
-.container{max-width:700px;margin:auto}
-.card{background:#fff;color:#000;padding:20px;border-radius:20px;margin-bottom:20px}
-button{padding:10px;border:none;border-radius:10px;cursor:pointer;margin:5px}
-.btn{background:#8b5cf6;color:#fff}
-input{padding:10px;width:100%;margin:10px 0}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<div class="card">
-<h2>ثبت‌نام سانس‌ها</h2>
-
-<button onclick="selectSanad('janedi')">جنیدی</button>
-<button onclick="selectSanad('farhangian')">فرهنگیان</button>
-
-<input id="fullName" placeholder="نام">
-
-<button class="btn" onclick="preRegister()">ثبت اولیه</button>
-<button class="btn" onclick="finalRegistration()">ثبت نهایی</button>
-
-<div id="messageArea"></div>
-</div>
-
-<div class="card">
-<h3>لیست ثبت‌نام‌ها</h3>
-<div id="registrantsList"></div>
-</div>
-
-</div>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot }
 from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
 const firebaseConfig = {
-apiKey:"AIzaSyBmOWgEU69uns5wArDY90EOFkQBzh5PlqY",
-authDomain:"amir-e5fa8.firebaseapp.com",
-projectId:"amir-e5fa8",
-storageBucket:"amir-e5fa8.firebasestorage.app",
-messagingSenderId:"1002836553065",
-appId:"1:1002836553065:web:cbc6d813ebe8c7349761f8"
+  apiKey: "AIzaSyBmOWgEU69uns5wArDY90EOFkQBzh5PlqY",
+  authDomain: "amir-e5fa8.firebaseapp.com",
+  projectId: "amir-e5fa8",
+  storageBucket: "amir-e5fa8.firebasestorage.app",
+  messagingSenderId: "1002836553065",
+  appId: "1:1002836553065:web:cbc6d813ebe8c7349761f8"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-let selected="janedi";
-let pending=null;
+let type = "janedi";
+let temp = null;
 
-window.selectSanad=(t)=>selected=t;
+// انتخاب سانس
+window.selectType = (t) => type = t;
 
-window.preRegister=()=>{
-let name=document.getElementById("fullName").value.trim();
-if(!name)return alert("اسم وارد کن");
-pending={name,type:selected};
-alert("مرحله اول انجام شد");
+// مرحله اول
+window.start = () => {
+  const name = document.getElementById("name").value.trim();
+  if (!name) return alert("اسم وارد کن");
+
+  temp = { name, type };
+  show("مرحله اول OK");
 };
 
-window.finalRegistration=async()=>{
-if(!pending)return;
+// ثبت نهایی
+window.save = async () => {
+  if (!temp) return;
 
-await addDoc(collection(db,"registrations"),{
-name:pending.name,
-type:pending.type,
-time:Date.now()
-});
+  await addDoc(collection(db, "registrations"), {
+    name: temp.name,
+    type: temp.type,
+    time: Date.now()
+  });
 
-pending=null;
-alert("ثبت شد ✅");
+  temp = null;
+  show("ثبت شد ✅");
 };
 
-onSnapshot(collection(db,"registrations"),(snap)=>{
-const data=snap.docs.map(d=>d.data());
-document.getElementById("registrantsList").innerHTML=
-data.map(x=>`<div>${x.name} - ${x.type}</div>`).join("");
+// پیام
+function show(t){
+  const el = document.getElementById("msg");
+  if (el) el.innerText = t;
+}
+
+// 🔥 مهم‌ترین FIX: صبر برای DOM
+window.addEventListener("DOMContentLoaded", () => {
+
+  const list = document.getElementById("list");
+
+  if (!list) {
+    console.error("LIST element not found");
+    return;
+  }
+
+  onSnapshot(collection(db, "registrations"), (snap) => {
+    const data = snap.docs.map(d => d.data());
+
+    list.innerHTML = data.length
+      ? data.map(x => `<div>${x.name} - ${x.type}</div>`).join("")
+      : "هیچ ثبت‌نامی وجود ندارد";
+  });
+
 });
 </script>
-
-</body>
-</html>
