@@ -1,155 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCL Heavy UI</title>
 
-.title {
-  font-size: 42px;
-  margin: 10px 0;
-  opacity: 0;
-  letter-spacing: 2px;
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+<style>
+body{
+margin:0;
+overflow:hidden;
+font-family:Arial;
+background:#000;
+color:white;
 }
 
-.subtitle {
-  opacity: 0;
-  color: #aaa;
+/* stadium + overlays */
+.bg{
+position:fixed;
+width:100%;
+height:100%;
+background:
+url("https://images.unsplash.com/photo-1508098682722-e99c43a406b2") center/cover;
+filter:brightness(0.35) contrast(1.2);
+z-index:-3;
 }
 
-.card {
-  margin: 30px auto;
-  width: 320px;
-  padding: 20px;
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(12px);
-  border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.2);
-  box-shadow: 0 0 40px rgba(108,92,231,0.3);
+.overlay1{
+position:fixed;
+width:100%;
+height:100%;
+background:radial-gradient(circle at center,rgba(0,0,80,0.5),black 70%);
+z-index:-2;
 }
 
-input {
-  width: 90%;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 10px;
-  border: none;
-  outline: none;
+.overlay2{
+position:fixed;
+width:100%;
+height:100%;
+background:
+linear-gradient(45deg,rgba(108,92,231,0.15),transparent,rgba(0,210,255,0.15));
+mix-blend-mode:screen;
+z-index:-1;
+animation:move 6s infinite alternate;
 }
 
-button {
-  width: 100%;
-  padding: 10px;
-  background: #6c5ce7;
-  border: none;
-  color: white;
-  border-radius: 10px;
-  cursor: pointer;
-  box-shadow: 0 0 20px #6c5ce7;
-  transition: 0.3s;
+@keyframes move{
+0%{transform:translateX(-20px)}
+100%{transform:translateX(20px)}
 }
 
-button:hover {
-  transform: scale(1.05);
+/* floating trophy glow */
+.trophy{
+position:absolute;
+top:5%;
+left:50%;
+transform:translateX(-50%);
+width:140px;
+filter:drop-shadow(0 0 25px #6c5ce7);
+animation:float 3s ease-in-out infinite;
+opacity:0.9;
 }
 
-.tabs {
-  display: flex;
-  gap: 5px;
-  margin-bottom: 10px;
+@keyframes float{
+0%,100%{transform:translate(-50%,0)}
+50%{transform:translate(-50%,-20px)}
 }
 
-.tabs button {
-  flex: 1;
-  background: rgba(255,255,255,0.1);
+/* title chaos style */
+h1{
+text-align:center;
+margin-top:180px;
+font-size:30px;
+letter-spacing:5px;
+opacity:0;
+text-shadow:0 0 20px #6c5ce7;
 }
 
-.tabs button.active {
-  background: #6c5ce7;
+/* main UI */
+.panel{
+position:absolute;
+top:55%;
+left:50%;
+transform:translate(-50%,-50%);
+width:360px;
+padding:20px;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,0.2);
+border-radius:18px;
+box-shadow:
+0 0 30px rgba(108,92,231,0.4),
+inset 0 0 20px rgba(255,255,255,0.05);
 }
 
-.list {
-  margin-top: 10px;
-  text-align: left;
-  max-height: 120px;
-  overflow: auto;
+/* tabs chaotic */
+.tabs{
+display:flex;
+gap:8px;
+margin-bottom:10px;
 }
 
-.item {
-  padding: 6px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  font-size: 14px;
+.tab{
+flex:1;
+padding:10px;
+border:none;
+background:rgba(255,255,255,0.1);
+color:white;
+cursor:pointer;
+transition:.3s;
+}
+
+.tab.active{
+background:linear-gradient(90deg,#6c5ce7,#00d2ff);
+box-shadow:0 0 15px #6c5ce7;
+}
+
+/* input chaos */
+input{
+width:100%;
+padding:10px;
+border:none;
+border-radius:10px;
+outline:none;
+margin-top:10px;
+}
+
+/* button neon */
+button.action{
+width:100%;
+margin-top:10px;
+padding:12px;
+border:none;
+border-radius:10px;
+background:linear-gradient(90deg,#6c5ce7,#00d2ff);
+color:white;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 0 20px #6c5ce7;
+}
+
+/* list heavy */
+.list{
+margin-top:10px;
+max-height:140px;
+overflow:auto;
+font-size:14px;
+}
+
+.item{
+padding:8px;
+border-bottom:1px solid rgba(255,255,255,0.1);
+display:flex;
+justify-content:space-between;
+}
+
+.badge{
+font-size:10px;
+padding:3px 6px;
+background:#6c5ce7;
+border-radius:8px;
 }
 </style>
 </head>
 
 <body>
 
-<video autoplay muted loop id="bgVideo">
-  <source src="https://cdn.coverr.co/videos/coverr-a-stadium-at-night-4513/1080p.mp4" type="video/mp4">
-</video>
+<div class="bg"></div>
+<div class="overlay1"></div>
+<div class="overlay2"></div>
 
-<div class="overlay"></div>
+<img class="trophy" src="https://upload.wikimedia.org/wikipedia/en/b/bf/UEFA_Champions_League_logo_2.svg">
 
-<div class="container">
+<h1>UEFA CHAMPIONS LEAGUE SYSTEM</h1>
 
-  <img class="trophy" src="https://upload.wikimedia.org/wikipedia/en/b/bf/UEFA_Champions_League_logo_2.svg">
+<div class="panel">
 
-  <h1 class="title">CHAMPIONS LEAGUE SYSTEM</h1>
-  <p class="subtitle">Futuristic Football Registration</p>
+<div class="tabs">
+<button class="tab active" id="a1" onclick="set('janedi')">JANEDI</button>
+<button class="tab" id="a2" onclick="set('farhangian')">FARHANGIAN</button>
+</div>
 
-  <div class="card">
+<input id="name" placeholder="Player Name">
 
-    <div class="tabs">
-      <button id="janediBtn" class="active" onclick="setType('janedi')">Janedi</button>
-      <button id="farhangianBtn" onclick="setType('farhangian')">Farhangian</button>
-    </div>
+<button class="action" onclick="add()">REGISTER PLAYER</button>
 
-    <input id="name" placeholder="Player Name">
-
-    <button onclick="register()">Register</button>
-
-    <div id="list" class="list"></div>
-
-  </div>
+<div class="list" id="list"></div>
 
 </div>
 
 <script>
-let type = "janedi";
+let type="janedi";
+let data={janedi:[],farhangian:[]};
 
-let data = {
-  janedi: [],
-  farhangian: []
-};
-
-function setType(t){
-  type = t;
-  document.getElementById("janediBtn").classList.remove("active");
-  document.getElementById("farhangianBtn").classList.remove("active");
-  document.getElementById(t + "Btn").classList.add("active");
-  render();
+function set(t){
+type=t;
+document.getElementById("a1").classList.remove("active");
+document.getElementById("a2").classList.remove("active");
+document.getElementById(t==="janedi"?"a1":"a2").classList.add("active");
+render();
 }
 
-function register(){
-  const name = document.getElementById("name").value;
-  if(!name) return;
+function add(){
+let n=document.getElementById("name").value;
+if(!n)return;
 
-  data[type].push(name);
-  document.getElementById("name").value = "";
-  render();
+data[type].push(n);
+document.getElementById("name").value="";
+render();
+
+gsap.from(".item:last-child",{x:-30,opacity:0,duration:0.3});
 }
 
 function render(){
-  const list = document.getElementById("list");
-  list.innerHTML = "";
+let list=document.getElementById("list");
+list.innerHTML="";
 
-  data[type].forEach((n)=>{
-    const div = document.createElement("div");
-    div.className = "item";
-    div.innerText = "⚽ " + n;
-    list.appendChild(div);
-  });
+data[type].forEach((p,i)=>{
+let div=document.createElement("div");
+div.className="item";
+div.innerHTML=`<span>⚽ ${p}</span><span class="badge">${type}</span>`;
+list.appendChild(div);
+});
 }
 
-// GSAP animations
-gsap.to(".title", {opacity:1, y:10, duration:1});
-gsap.to(".subtitle", {opacity:1, duration:1, delay:0.5});
-gsap.from(".card", {opacity:0, scale:0.8, duration:1, delay:1});
+gsap.to("h1",{opacity:1,y:10,duration:1});
+gsap.from(".panel",{opacity:0,scale:0.8,duration:1,delay:0.5});
 </script>
 
 </body>
