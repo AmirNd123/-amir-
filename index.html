@@ -1,241 +1,208 @@
-<!-- فونت --><link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800&display=swap" rel="stylesheet"><!-- کانفتی --><script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script><style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Champions League System</title>
 
-/* UEFA CHAMPIONS LEAGUE THEME */
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 
-*{
-font-family:'Vazirmatn',sans-serif;
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  overflow: hidden;
+  color: white;
+  background: black;
 }
 
-body{
-background:
-linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.85)),
-url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=1920');
-background-size:cover;
-background-position:center;
-background-attachment:fixed;
-min-height:100vh;
-overflow-x:hidden;
+#bgVideo {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  opacity: 0.6;
 }
 
-/* نور متحرک */
-body::before{
-content:'';
-position:fixed;
-inset:0;
-background:
-radial-gradient(circle at 20% 20%,rgba(0,162,255,.2),transparent 40%),
-radial-gradient(circle at 80% 30%,rgba(140,0,255,.15),transparent 40%);
-animation:glowMove 10s infinite alternate;
-pointer-events:none;
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(10,15,40,0.6), black);
+  z-index: -1;
 }
 
-@keyframes glowMove{
-from{transform:translateY(-20px);}
-to{transform:translateY(20px);}
+.container {
+  text-align: center;
+  padding-top: 40px;
 }
 
-.card{
-background:rgba(255,255,255,.08)!important;
-backdrop-filter:blur(18px);
-border:1px solid rgba(255,255,255,.15);
-box-shadow:
-0 0 30px rgba(0,162,255,.15),
-0 0 60px rgba(0,162,255,.08);
-animation:fadeUp .8s ease;
+.trophy {
+  width: 130px;
+  opacity: 0.9;
+  animation: float 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px #6c5ce7);
 }
 
-@keyframes fadeUp{
-from{
-opacity:0;
-transform:translateY(40px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0); }
 }
 
-.header{
-background:
-linear-gradient(135deg,#001f54,#003c9e,#0b63ff)!important;
-position:relative;
-overflow:hidden;
+.title {
+  font-size: 42px;
+  margin: 10px 0;
+  opacity: 0;
+  letter-spacing: 2px;
 }
 
-.header::before{
-content:'🏆';
-position:absolute;
-font-size:120px;
-opacity:.08;
-left:50%;
-top:50%;
-transform:translate(-50%,-50%);
+.subtitle {
+  opacity: 0;
+  color: #aaa;
 }
 
-.header h1{
-font-size:34px!important;
-font-weight:800;
-text-shadow:0 0 25px #00c3ff;
+.card {
+  margin: 30px auto;
+  width: 320px;
+  padding: 20px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 0 40px rgba(108,92,231,0.3);
 }
 
-.header p{
-opacity:.9;
+input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: none;
+  outline: none;
 }
 
-.sanad-box{
-background:transparent!important;
+button {
+  width: 100%;
+  padding: 10px;
+  background: #6c5ce7;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 20px #6c5ce7;
+  transition: 0.3s;
 }
 
-.sanad-card{
-background:rgba(255,255,255,.08)!important;
-backdrop-filter:blur(16px);
-border:1px solid rgba(255,255,255,.15)!important;
-transition:.35s;
+button:hover {
+  transform: scale(1.05);
 }
 
-.sanad-card h3{
-color:white!important;
+.tabs {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 10px;
 }
 
-.sanad-card .price{
-color:#00ffae!important;
+.tabs button {
+  flex: 1;
+  background: rgba(255,255,255,0.1);
 }
 
-.sanad-card .capacity{
-color:#cbd5e1!important;
+.tabs button.active {
+  background: #6c5ce7;
 }
 
-.sanad-card:hover{
-transform:translateY(-8px) scale(1.03);
-box-shadow:
-0 0 15px #00c3ff,
-0 0 35px #00c3ff;
+.list {
+  margin-top: 10px;
+  text-align: left;
+  max-height: 120px;
+  overflow: auto;
 }
 
-.sanad-card.selected{
-border:2px solid #00c3ff!important;
-box-shadow:
-0 0 20px #00c3ff,
-0 0 40px #00c3ff;
+.item {
+  padding: 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<video autoplay muted loop id="bgVideo">
+  <source src="https://cdn.coverr.co/videos/coverr-a-stadium-at-night-4513/1080p.mp4" type="video/mp4">
+</video>
+
+<div class="overlay"></div>
+
+<div class="container">
+
+  <img class="trophy" src="https://upload.wikimedia.org/wikipedia/en/b/bf/UEFA_Champions_League_logo_2.svg">
+
+  <h1 class="title">CHAMPIONS LEAGUE SYSTEM</h1>
+  <p class="subtitle">Futuristic Football Registration</p>
+
+  <div class="card">
+
+    <div class="tabs">
+      <button id="janediBtn" class="active" onclick="setType('janedi')">Janedi</button>
+      <button id="farhangianBtn" onclick="setType('farhangian')">Farhangian</button>
+    </div>
+
+    <input id="name" placeholder="Player Name">
+
+    <button onclick="register()">Register</button>
+
+    <div id="list" class="list"></div>
+
+  </div>
+
+</div>
+
+<script>
+let type = "janedi";
+
+let data = {
+  janedi: [],
+  farhangian: []
+};
+
+function setType(t){
+  type = t;
+  document.getElementById("janediBtn").classList.remove("active");
+  document.getElementById("farhangianBtn").classList.remove("active");
+  document.getElementById(t + "Btn").classList.add("active");
+  render();
 }
 
-label{
-color:white!important;
+function register(){
+  const name = document.getElementById("name").value;
+  if(!name) return;
+
+  data[type].push(name);
+  document.getElementById("name").value = "";
+  render();
 }
 
-input{
-background:rgba(255,255,255,.08)!important;
-border:1px solid rgba(255,255,255,.2)!important;
-color:white!important;
+function render(){
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+
+  data[type].forEach((n)=>{
+    const div = document.createElement("div");
+    div.className = "item";
+    div.innerText = "⚽ " + n;
+    list.appendChild(div);
+  });
 }
 
-input::placeholder{
-color:#cbd5e1;
-}
-
-input:focus{
-border-color:#00c3ff!important;
-box-shadow:0 0 20px rgba(0,195,255,.3)!important;
-}
-
-.btn-primary{
-background:linear-gradient(
-45deg,
-#004dff,
-#00c3ff
-)!important;
-}
-
-.btn-primary:hover{
-transform:scale(.98);
-box-shadow:
-0 0 20px #00c3ff,
-0 0 40px #00c3ff;
-}
-
-.btn-success{
-background:linear-gradient(
-45deg,
-#00c853,
-#00e676
-)!important;
-}
-
-.btn-success:hover{
-box-shadow:
-0 0 20px #00ff88,
-0 0 40px #00ff88;
-}
-
-.registrants-list{
-background:rgba(255,255,255,.05)!important;
-}
-
-.registrants-list h3{
-color:white!important;
-}
-
-.registrant-item{
-background:rgba(255,255,255,.08)!important;
-border-right:4px solid #00c3ff!important;
-}
-
-.registrant-name{
-color:white!important;
-}
-
-.registrant-date{
-color:#cbd5e1!important;
-}
-
-.message-success{
-background:rgba(0,255,100,.15)!important;
-color:#8cffb3!important;
-}
-
-.message-error{
-background:rgba(255,0,0,.15)!important;
-color:#ffb3b3!important;
-}
-
-.message-warning{
-background:rgba(255,170,0,.15)!important;
-color:#ffd98c!important;
-}
-
-.admin-trigger{
-background:linear-gradient(45deg,#004dff,#00c3ff)!important;
-box-shadow:0 0 20px #00c3ff;
-}
-
-.admin-box{
-background:#0f172a!important;
-color:white!important;
-}
-
-.empty-list{
-color:#cbd5e1!important;
-}
-
-</style><script>
-
-document.addEventListener('click',function(e){
-
-if(
-e.target.id==='fakePayBtn' ||
-e.target.innerText.includes('ثبت‌نامه نهایی')
-){
-
-setTimeout(()=>{
-confetti({
-particleCount:200,
-spread:120,
-origin:{y:0.6}
-});
-},300);
-
-}
-
-});
-
+// GSAP animations
+gsap.to(".title", {opacity:1, y:10, duration:1});
+gsap.to(".subtitle", {opacity:1, duration:1, delay:0.5});
+gsap.from(".card", {opacity:0, scale:0.8, duration:1, delay:1});
 </script>
+
+</body>
+</html>
