@@ -1,447 +1,241 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>ثبت‌نامه سانس‌ها | سبک چمپیونزلیگ</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<!-- فونت --><link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800&display=swap" rel="stylesheet"><!-- کانفتی --><script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script><style>
 
-        body {
-            font-family: 'Tahoma', 'Segoe UI', 'Poppins', system-ui, sans-serif;
-            min-height: 100vh;
-            background: radial-gradient(circle at 20% 30%, #0a0f2a, #030614);
-            position: relative;
-            overflow-x: hidden;
-            padding: 20px;
-        }
+/* UEFA CHAMPIONS LEAGUE THEME */
 
-        /* استارهای پس‌زمینه */
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.6;
-            animation: twinkle 2s infinite alternate;
-        }
-        @keyframes twinkle {
-            0% { opacity: 0.2; transform: scale(1); }
-            100% { opacity: 1; transform: scale(1.2); }
-        }
+*{
+font-family:'Vazirmatn',sans-serif;
+}
 
-        /* توپ فوتبال چرخان */
-        .rotating-ball {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle at 35% 35%, white, #c0c0c0);
-            border-radius: 50%;
-            box-shadow: 0 0 20px rgba(255,215,0,0.5);
-            animation: rotateBall 4s linear infinite, floatBall 3s ease-in-out infinite;
-            z-index: 10;
-            cursor: pointer;
-        }
-        .rotating-ball::before {
-            content: "⚽";
-            position: absolute;
-            font-size: 50px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        @keyframes rotateBall {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        @keyframes floatBall {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
+body{
+background:
+linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.85)),
+url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=1920');
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+min-height:100vh;
+overflow-x:hidden;
+}
 
-        .container {
-            max-width: 750px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
+/* نور متحرک */
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at 20% 20%,rgba(0,162,255,.2),transparent 40%),
+radial-gradient(circle at 80% 30%,rgba(140,0,255,.15),transparent 40%);
+animation:glowMove 10s infinite alternate;
+pointer-events:none;
+}
 
-        /* کارت‌های شیشه‌ای (Glassmorphism) */
-        .card {
-            background: rgba(15, 25, 55, 0.65);
-            backdrop-filter: blur(12px);
-            border-radius: 32px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(255, 215, 0, 0.2);
-            overflow: hidden;
-            margin-bottom: 25px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5);
-        }
+@keyframes glowMove{
+from{transform:translateY(-20px);}
+to{transform:translateY(20px);}
+}
 
-        .header {
-            background: linear-gradient(135deg, #0a0f2e, #001d3d);
-            padding: 30px;
-            text-align: center;
-            position: relative;
-            border-bottom: 3px solid #ffd700;
-        }
-        .header h1 {
-            font-size: 2rem;
-            background: linear-gradient(135deg, #ffd700, #ffb347);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
-            letter-spacing: 2px;
-        }
-        .ucl-logo {
-            width: 60px;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 0 8px gold);
-        }
+.card{
+background:rgba(255,255,255,.08)!important;
+backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,.15);
+box-shadow:
+0 0 30px rgba(0,162,255,.15),
+0 0 60px rgba(0,162,255,.08);
+animation:fadeUp .8s ease;
+}
 
-        .sanad-box {
-            display: flex;
-            gap: 18px;
-            padding: 25px;
-            flex-wrap: wrap;
-        }
-        .sanad-card {
-            flex: 1;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            padding: 20px;
-            border-radius: 24px;
-            text-align: center;
-            cursor: pointer;
-            border: 1px solid rgba(255, 215, 0, 0.4);
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            animation: fadeInUp 0.6s ease-out;
-        }
-        .sanad-card.selected {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 100, 0, 0.3));
-            border: 2px solid #ffd700;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-            transform: scale(1.02);
-        }
-        .sanad-card h3 {
-            color: #ffd700;
-            margin-bottom: 12px;
-            font-size: 1.4rem;
-        }
-        .sanad-card .price {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #fff;
-            background: rgba(0,0,0,0.6);
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 40px;
-        }
-        .sanad-card .capacity {
-            margin-top: 12px;
-            color: #ccc;
-        }
+@keyframes fadeUp{
+from{
+opacity:0;
+transform:translateY(40px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
 
-        .form-section {
-            padding: 25px;
-        }
-        .input-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #ffd700;
-            font-weight: 600;
-        }
-        input {
-            width: 100%;
-            padding: 14px 18px;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid #ffd700;
-            border-radius: 60px;
-            font-size: 16px;
-            color: white;
-            transition: 0.2s;
-        }
-        input:focus {
-            outline: none;
-            border-color: #fff;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
-        .btn {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 60px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-            background: linear-gradient(135deg, #ffd700, #ff8c00);
-            color: #0a0f2a;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        .btn:disabled {
-            background: #555;
-            cursor: not-allowed;
-        }
-        .btn-success {
-            background: linear-gradient(135deg, #00c853, #009624);
-            color: white;
-        }
-        .registrants-list {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 24px;
-            padding: 20px;
-            margin: 10px 20px 20px;
-        }
-        .registrant-item {
-            background: rgba(255, 255, 255, 0.1);
-            margin-bottom: 10px;
-            padding: 12px;
-            border-radius: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(4px);
-            border-left: 4px solid #ffd700;
-        }
-        .delete-btn {
-            background: #d32f2f;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 30px;
-            color: white;
-            cursor: pointer;
-        }
-        .admin-trigger {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            width: 45px;
-            height: 45px;
-            background: rgba(0,0,0,0.5);
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 99;
-            border: 1px solid gold;
-        }
-        .message {
-            padding: 12px;
-            border-radius: 50px;
-            text-align: center;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px);}
-            to { opacity: 1; transform: translateY(0);}
-        }
-        .footer-text {
-            text-align: center;
-            padding: 15px;
-            font-size: 12px;
-            color: #aaa;
-        }
-        @media (max-width: 550px) {
-            .sanad-box { flex-direction: column; }
-        }
-    </style>
-</head>
-<body>
-<div class="stars" id="stars"></div>
-<div class="rotating-ball"></div>
+.header{
+background:
+linear-gradient(135deg,#001f54,#003c9e,#0b63ff)!important;
+position:relative;
+overflow:hidden;
+}
 
-<div class="container">
-    <div class="card">
-        <div class="header">
-            <img src="https://upload.wikimedia.org/wikipedia/en/5/56/UEFA_Champions_League_logo.svg" alt="UCL" class="ucl-logo" style="width:70px; background:transparent">
-            <h1>🏆 ثبت‌نامه سانس‌های ویژه 🏆</h1>
-            <p style="color:#ffd9a5;">به سبک قهرمانان اروپا</p>
-        </div>
-        <div class="sanad-box">
-            <div class="sanad-card" id="janediCard">
-                <h3>⭐ سانس جنیدی</h3>
-                <div class="price">💰 ۴۳,۰۰۰ تومان</div>
-                <div class="capacity">ظرفیت باقی‌مانده: <span id="janediCapacity">10</span></div>
-            </div>
-            <div class="sanad-card" id="farhangianCard">
-                <h3>🎓 سانس فرهنگیان</h3>
-                <div class="price">💰 ۱۰,۰۰۰ تومان</div>
-                <div class="capacity">ظرفیت باقی‌مانده: <span id="farhangianCapacity">12</span></div>
-            </div>
-        </div>
-        <div class="form-section">
-            <div id="messageArea"></div>
-            <div class="input-group">
-                <label>⚽ نام و نام خانوادگی (همانند کارت بازی)</label>
-                <input type="text" id="fullName" placeholder="مثال: کریم بنزما">
-            </div>
-            <button class="btn" id="preRegisterBtn">📋 ثبت‌نامه اولیه</button>
-            <div id="paymentSection" style="display: none; margin-top: 20px;">
-                <button class="btn btn-success" id="fakePayBtn">✅ تایید نهایی (الان قهرمان شو)</button>
-            </div>
-        </div>
-    </div>
+.header::before{
+content:'🏆';
+position:absolute;
+font-size:120px;
+opacity:.08;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+}
 
-    <div class="card">
-        <div class="registrants-list">
-            <h3 style="color:#ffd700; margin-bottom: 15px;" id="listTitle">🏅 لیست قهرمانان (0 از 10)</h3>
-            <div id="registrantsList"><div class="empty-list" style="color:#aaa;">در انتظار قهرمانان بعدی...</div></div>
-        </div>
-        <div class="footer-text">UEFA CHAMPIONS LEAGUE • BY CHAMPION</div>
-    </div>
-</div>
+.header h1{
+font-size:34px!important;
+font-weight:800;
+text-shadow:0 0 25px #00c3ff;
+}
 
-<div class="admin-trigger" id="adminTrigger"></div>
-<div class="admin-modal" id="adminModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:1000;">
-    <div style="background:#0f1a2f; padding:25px; border-radius:32px; max-width:350px; text-align:center; border:2px solid gold;">
-        <h3 style="color:gold;">مدیریت قهرمانان</h3>
-        <input type="password" id="adminPass" placeholder="رمز عبور" style="width:100%; margin:15px 0; padding:10px; border-radius:40px;">
-        <button id="resetBtn" style="background:#c62828; color:white; padding:10px 20px; border:none; border-radius:40px; margin:5px;">🔄 ریست کل سیستم</button>
-        <button id="closeAdminBtn" style="background:gray; margin-top:10px; padding:10px 20px; border:none; border-radius:40px;">بستن</button>
-    </div>
-</div>
+.header p{
+opacity:.9;
+}
 
-<script>
-    // ------------------------------
-    // سیستم ذخیره‌سازی یکپارچه (localStorage + اعمال به همه دستگاه‌ها؟ نه ولی بهتر از قبل)
-    // با قابلیت حذف توسط ادمین
-    // ------------------------------
-    let sanads = {
-        janedi: { name: 'جنیدی', capacity: 10, registrants: [] },
-        farhangian: { name: 'فرهنگیان', capacity: 12, registrants: [] }
-    };
-    let selectedType = 'janedi';
-    let pendingUser = null;
+.sanad-box{
+background:transparent!important;
+}
 
-    function loadData() {
-        const saved = localStorage.getItem('ucl_registrations');
-        if(saved) {
-            try {
-                const data = JSON.parse(saved);
-                if(data.sanads) sanads = data.sanads;
-                selectedType = data.selectedType || 'janedi';
-            } catch(e) {}
-        }
-        updateUI();
-    }
-    function saveData() {
-        localStorage.setItem('ucl_registrations', JSON.stringify({ sanads, selectedType }));
-    }
-    function updateCapacity() {
-        document.getElementById('janediCapacity').innerText = sanads.janedi.capacity - sanads.janedi.registrants.length;
-        document.getElementById('farhangianCapacity').innerText = sanads.farhangian.capacity - sanads.farhangian.registrants.length;
-    }
-    function showMessage(msg, type) {
-        const div = document.getElementById('messageArea');
-        div.innerHTML = `<div style="background:${type==='success'?'#2e7d32':type==='error'?'#c62828':'#ff9800'}; padding:10px; border-radius:40px;">${msg}</div>`;
-        setTimeout(() => div.innerHTML = '', 3000);
-    }
-    function updateUI() {
-        updateCapacity();
-        const current = sanads[selectedType];
-        const remaining = current.capacity - current.registrants.length;
-        document.getElementById('janediCard').classList.remove('selected');
-        document.getElementById('farhangianCard').classList.remove('selected');
-        document.getElementById(`${selectedType}Card`).classList.add('selected');
-        const preBtn = document.getElementById('preRegisterBtn');
-        const nameInp = document.getElementById('fullName');
-        if(remaining <= 0) { preBtn.disabled = true; preBtn.innerText = '⛔ ظرفیت تکمیل'; nameInp.disabled = true; }
-        else { preBtn.disabled = false; preBtn.innerText = '📋 ثبت‌نامه اولیه'; nameInp.disabled = false; }
-        document.getElementById('paymentSection').style.display = (pendingUser && remaining > 0) ? 'block' : 'none';
-        document.getElementById('listTitle').innerHTML = `🏅 لیست قهرمانان ${current.name} (${current.registrants.length} از ${current.capacity})`;
-        const listDiv = document.getElementById('registrantsList');
-        if(current.registrants.length === 0) listDiv.innerHTML = '<div class="empty-list" style="color:#aaa;">هنوز کسی به لیگ قهرمانان نپیوسته...</div>';
-        else {
-            let html = '';
-            for(let i=0; i<current.registrants.length; i++) {
-                html += `<div class="registrant-item"><div><strong>${escapeHtml(current.registrants[i].name)}</strong><br><small>${current.registrants[i].date}</small></div><button class="delete-btn" onclick="window.deleteUser(${i})">حذف</button></div>`;
-            }
-            listDiv.innerHTML = html;
-        }
-    }
-    function escapeHtml(s) { return s.replace(/[&<>]/g, function(m){ return m==='&'?'&amp;':m==='<'?'&lt;':'&gt;';}); }
-    window.deleteUser = function(idx) {
-        if(confirm('حذف این قهرمان از تاریخ؟')) {
-            sanads[selectedType].registrants.splice(idx,1);
-            saveData(); updateUI(); showMessage('حذف شد','success');
-        }
-    };
-    function preRegister() {
-        const cur = sanads[selectedType];
-        if(cur.capacity - cur.registrants.length <= 0) { showMessage('ظرفیت پر است','error'); return; }
-        if(pendingUser) { showMessage('ثبت اولیه تکمیل نشده','error'); return; }
-        const name = document.getElementById('fullName').value.trim();
-        if(!name) { showMessage('نام قهرمانی خود را وارد کن','error'); return; }
-        if(cur.registrants.some(r=>r.name===name)) { showMessage('این نام قبلاً ثبت شده','error'); return; }
-        pendingUser = { name, type: selectedType };
-        updateUI();
-        showMessage(`مرحله اول ثبت نام ${name} انجام شد، دکمه تایید را بزن`,'success');
-    }
-    function finalReg() {
-        if(!pendingUser) return;
-        const target = sanads[pendingUser.type];
-        if(target.capacity - target.registrants.length <=0) { showMessage('ظرفیت پر شد','error'); pendingUser=null; updateUI(); return; }
-        const now = new Date();
-        target.registrants.push({ name: pendingUser.name, date: now.toLocaleDateString('fa-IR')+' - '+now.toLocaleTimeString('fa-IR') });
-        saveData();
-        document.getElementById('fullName').value = '';
-        pendingUser = null;
-        updateUI();
-        showMessage('قهرمان به جمع ما پیوست!','success');
-    }
-    function selectSanad(t) { if(pendingUser) { showMessage('ابتدا ثبت قبلی را نهایی کن','error'); return; } selectedType = t; updateUI(); }
-    function resetSystem() {
-        const pass = document.getElementById('adminPass').value;
-        if(pass !== '13861386') { showMessage('رمز مدیریت نادرست','error'); return false; }
-        if(confirm('همه چیز پاک شود؟')) {
-            sanads = { janedi: { name:'جنیدی', capacity:10, registrants:[] }, farhangian: { name:'فرهنگیان', capacity:12, registrants:[] } };
-            pendingUser=null; selectedType='janedi'; saveData(); document.getElementById('fullName').value=''; updateUI(); showMessage('ریست کامل شد','success');
-            return true;
-        }
-        return false;
-    }
-    document.getElementById('preRegisterBtn').onclick = preRegister;
-    document.getElementById('fakePayBtn').onclick = finalReg;
-    document.getElementById('janediCard').onclick = () => selectSanad('janedi');
-    document.getElementById('farhangianCard').onclick = () => selectSanad('farhangian');
-    document.getElementById('adminTrigger').onclick = () => { document.getElementById('adminModal').style.display='flex'; };
-    document.getElementById('closeAdminBtn').onclick = () => { document.getElementById('adminModal').style.display='none'; };
-    document.getElementById('resetBtn').onclick = () => { if(resetSystem()) document.getElementById('adminModal').style.display='none'; };
-    loadData();
+.sanad-card{
+background:rgba(255,255,255,.08)!important;
+backdrop-filter:blur(16px);
+border:1px solid rgba(255,255,255,.15)!important;
+transition:.35s;
+}
 
-    // ساخت ستاره ها
-    for(let i=0;i<150;i++) {
-        let star = document.createElement('div');
-        star.classList.add('star');
-        star.style.top = Math.random() * 100 + '%';
-        star.style.left = Math.random() * 100 + '%';
-        star.style.width = star.style.height = (Math.random() * 3 + 1) + 'px';
-        star.style.animationDelay = Math.random() * 3 + 's';
-        document.getElementById('stars').appendChild(star);
-    }
+.sanad-card h3{
+color:white!important;
+}
+
+.sanad-card .price{
+color:#00ffae!important;
+}
+
+.sanad-card .capacity{
+color:#cbd5e1!important;
+}
+
+.sanad-card:hover{
+transform:translateY(-8px) scale(1.03);
+box-shadow:
+0 0 15px #00c3ff,
+0 0 35px #00c3ff;
+}
+
+.sanad-card.selected{
+border:2px solid #00c3ff!important;
+box-shadow:
+0 0 20px #00c3ff,
+0 0 40px #00c3ff;
+}
+
+label{
+color:white!important;
+}
+
+input{
+background:rgba(255,255,255,.08)!important;
+border:1px solid rgba(255,255,255,.2)!important;
+color:white!important;
+}
+
+input::placeholder{
+color:#cbd5e1;
+}
+
+input:focus{
+border-color:#00c3ff!important;
+box-shadow:0 0 20px rgba(0,195,255,.3)!important;
+}
+
+.btn-primary{
+background:linear-gradient(
+45deg,
+#004dff,
+#00c3ff
+)!important;
+}
+
+.btn-primary:hover{
+transform:scale(.98);
+box-shadow:
+0 0 20px #00c3ff,
+0 0 40px #00c3ff;
+}
+
+.btn-success{
+background:linear-gradient(
+45deg,
+#00c853,
+#00e676
+)!important;
+}
+
+.btn-success:hover{
+box-shadow:
+0 0 20px #00ff88,
+0 0 40px #00ff88;
+}
+
+.registrants-list{
+background:rgba(255,255,255,.05)!important;
+}
+
+.registrants-list h3{
+color:white!important;
+}
+
+.registrant-item{
+background:rgba(255,255,255,.08)!important;
+border-right:4px solid #00c3ff!important;
+}
+
+.registrant-name{
+color:white!important;
+}
+
+.registrant-date{
+color:#cbd5e1!important;
+}
+
+.message-success{
+background:rgba(0,255,100,.15)!important;
+color:#8cffb3!important;
+}
+
+.message-error{
+background:rgba(255,0,0,.15)!important;
+color:#ffb3b3!important;
+}
+
+.message-warning{
+background:rgba(255,170,0,.15)!important;
+color:#ffd98c!important;
+}
+
+.admin-trigger{
+background:linear-gradient(45deg,#004dff,#00c3ff)!important;
+box-shadow:0 0 20px #00c3ff;
+}
+
+.admin-box{
+background:#0f172a!important;
+color:white!important;
+}
+
+.empty-list{
+color:#cbd5e1!important;
+}
+
+</style><script>
+
+document.addEventListener('click',function(e){
+
+if(
+e.target.id==='fakePayBtn' ||
+e.target.innerText.includes('ثبت‌نامه نهایی')
+){
+
+setTimeout(()=>{
+confetti({
+particleCount:200,
+spread:120,
+origin:{y:0.6}
+});
+},300);
+
+}
+
+});
+
 </script>
-</body>
-</html>
