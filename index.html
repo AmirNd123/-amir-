@@ -110,20 +110,20 @@
         </div>
     </div>
 
-    <!-- بارگذاری ماژول‌های فایربیس اختصاصی پروژه شما -->
+    <!-- تنظیمات و کتابخانه‌های فایربیس پروژه جدید شما -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-        // تنظیمات اختصاصی پروژه فایربیس شما
+        // مشخصات کانفیگ جدید شما که از پی‌سی فرستادی
         const firebaseConfig = {
-            apiKey: "AIzaSyAYBO0msCX_7l7iT8Qpnqw5--ihZreZQXU",
-            authDomain: "uefa-75023.firebaseapp.com",
-            databaseURL: "https://uefa-75023-default-rtdb.firebaseio.com",
-            projectId: "uefa-75023",
-            storageBucket: "uefa-75023.firebasestorage.app",
-            messagingSenderId: "1030055666371",
-            appId: "1:1030055666371:web:0e94fefe6787155c263876"
+            apiKey: "AIzaSyBzWbFwhatvsj9NjzODGbwAkBAkSX1z16U",
+            authDomain: "uefa-7cbce.firebaseapp.com",
+            databaseURL: "https://uefa-7cbce-default-rtdb.firebaseio.com",
+            projectId: "uefa-7cbce",
+            storageBucket: "uefa-7cbce.firebasestorage.app",
+            messagingSenderId: "266513606039",
+            appId: "1:266513606039:web:7181d11916c61894cb10d2"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -138,7 +138,7 @@
         let selectedType = 'janedi';
         let pendingUser = null;
 
-        // شنود آنی تغییرات فایربیس
+        // دریافت آنی اطلاعات
         onValue(dbRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
@@ -153,8 +153,8 @@
             try {
                 await set(dbRef, sanads);
             } catch (err) {
-                console.error("خطا در فایربیس:", err);
-                showMessage('خطا در ذخیره سازی روی سرور فایربیس!', 'error');
+                console.error("خطا در ذخیره:", err);
+                showMessage('خطا در ارتباط با سرور فایربیس!', 'error');
             }
         }
 
